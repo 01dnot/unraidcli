@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/01dnot/unraidcli/internal/client"
@@ -52,6 +53,13 @@ Examples:
 		}
 		if configAPIKey == "" {
 			return fmt.Errorf("--apikey is required")
+		}
+
+		// Security warning for HTTP
+		if !strings.HasPrefix(configURL, "https://") {
+			fmt.Println("\n⚠️  WARNING: Using HTTP (not HTTPS) exposes your API key in transit.")
+			fmt.Println("   For remote access, use HTTPS or a VPN (Tailscale, WireGuard).")
+			fmt.Println("   HTTP is only safe on trusted local networks.\n")
 		}
 
 		// Test connection

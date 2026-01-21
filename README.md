@@ -438,6 +438,25 @@ unraidcli server info --server home
 unraidcli config list
 ```
 
+## Security Best Practices
+
+### API Key Security
+- **Least Privilege**: Create API keys with only the permissions you need
+- **Rotation**: Regularly regenerate API keys
+- **Storage**: API keys are stored in `~/.unraidcli/config.yaml` with 0600 permissions
+- **Shell History**: After running `config set --apikey`, clear your shell history to avoid exposing the key
+
+### Network Security
+- **HTTPS Required**: Always use HTTPS for remote connections to protect your API key in transit
+- **Local Networks**: HTTP is acceptable only on trusted local networks
+- **VPN Access**: Use Tailscale or WireGuard for secure remote access instead of exposing to the internet
+
+### Clearing Shell History
+```bash
+# After setting up your API key
+history -d $(history 1)  # Removes last command from history
+```
+
 ## API Permissions
 
 Your API key needs appropriate permissions for the operations you want to perform:
@@ -446,6 +465,8 @@ Your API key needs appropriate permissions for the operations you want to perfor
 - **Write operations** (start, stop, restart): Require write permissions
 
 Configure permissions when creating the API key in the Unraid WebGUI.
+
+For more security information, see [SECURITY.md](SECURITY.md).
 
 ## Troubleshooting
 

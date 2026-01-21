@@ -60,14 +60,11 @@ This script automatically:
 
 **Homebrew (macOS/Linux):**
 ```bash
-# Add the tap
-brew tap 01dnot/unraidcli
-
-# Install
-brew install unraidcli
+# Install (single command)
+brew install 01dnot/unraidcli/unraidcli
 
 # Update
-brew upgrade unraidcli
+brew upgrade 01dnot/unraidcli/unraidcli
 ```
 
 **Go Install:**

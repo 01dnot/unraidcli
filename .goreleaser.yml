@@ -28,7 +28,7 @@ brews:
   - name: unraidcli
     repository:
       owner: 01dnot
-      name: unraidcli
+      name: homebrew-unraidcli
     folder: Formula
     homepage: https://github.com/01dnot/unraidcli
     description: Command-line interface for managing Unraid servers

@@ -9,87 +9,25 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    name: Build and Release
+  goreleaser:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.21'
 
-      - name: Get version from tag
-        id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-      - name: Build binaries
-        run: |
-          # Linux AMD64
-          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o unraidcli-linux-amd64
-
-          # Linux ARM64
-          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o unraidcli-linux-arm64
-
-          # macOS AMD64 (Intel)
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o unraidcli-darwin-amd64
-
-          # macOS ARM64 (Apple Silicon)
-          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o unraidcli-darwin-arm64
-
-          # Windows AMD64
-          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o unraidcli-windows-amd64.exe
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
         with:
-          files: |
-            unraidcli-linux-amd64
-            unraidcli-linux-arm64
-            unraidcli-darwin-amd64
-            unraidcli-darwin-arm64
-            unraidcli-windows-amd64.exe
-          body: |
-            ## Installation
-
-            Download the appropriate binary for your platform:
-
-            **Linux (AMD64):**
-            ```bash
-            curl -L https://github.com/01dnot/unraidcli/releases/download/${{ steps.get_version.outputs.VERSION }}/unraidcli-linux-amd64 -o unraidcli
-            chmod +x unraidcli
-            sudo mv unraidcli /usr/local/bin/
-            ```
-
-            **Linux (ARM64):**
-            ```bash
-            curl -L https://github.com/01dnot/unraidcli/releases/download/${{ steps.get_version.outputs.VERSION }}/unraidcli-linux-arm64 -o unraidcli
-            chmod +x unraidcli
-            sudo mv unraidcli /usr/local/bin/
-            ```
-
-            **macOS (Intel):**
-            ```bash
-            curl -L https://github.com/01dnot/unraidcli/releases/download/${{ steps.get_version.outputs.VERSION }}/unraidcli-darwin-amd64 -o unraidcli
-            chmod +x unraidcli
-            sudo mv unraidcli /usr/local/bin/
-            ```
-
-            **macOS (Apple Silicon):**
-            ```bash
-            curl -L https://github.com/01dnot/unraidcli/releases/download/${{ steps.get_version.outputs.VERSION }}/unraidcli-darwin-arm64 -o unraidcli
-            chmod +x unraidcli
-            sudo mv unraidcli /usr/local/bin/
-            ```
-
-            **Windows:**
-            Download `unraidcli-windows-amd64.exe` and add it to your PATH.
-
-            ## What's Changed
-            See commits since last release for details.
-          draft: false
-          prerelease: false
+          distribution: goreleaser
+          version: latest
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}

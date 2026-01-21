@@ -1,0 +1,57 @@
+project_name: unraidcli
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - format: binary
+    name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+
+brews:
+  - name: unraidcli
+    repository:
+      owner: 01dnot
+      name: homebrew-unraidcli
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    folder: Formula
+    homepage: https://github.com/01dnot/unraidcli
+    description: Command-line interface for managing Unraid servers
+    license: MIT
+    install: |
+      bin.install "unraidcli"
+    test: |
+      system "#{bin}/unraidcli", "--version"
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - 'typo'
+
+release:
+  github:
+    owner: 01dnot
+    name: unraidcli

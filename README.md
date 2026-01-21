@@ -43,31 +43,63 @@ Manage your Unraid server directly from the command line using the official Grap
 
 ## Installation
 
-### Option 1: Download Pre-built Binary (Recommended)
+### Quick Install (Recommended)
 
-Download the latest release for your platform from the [Releases page](https://github.com/01dnot/unraidcli/releases).
-
-**Linux/macOS:**
+**macOS / Linux - One-liner:**
 ```bash
-# Download the binary (replace VERSION and OS/ARCH as needed)
-curl -L https://github.com/01dnot/unraidcli/releases/latest/download/unraidcli-linux-amd64 -o unraidcli
-
-# Make it executable
-chmod +x unraidcli
-
-# Move to PATH
-sudo mv unraidcli /usr/local/bin/
+curl -sSL https://raw.githubusercontent.com/01dnot/unraidcli/main/install.sh | bash
 ```
 
-### Option 2: Using Go Install
+This script automatically:
+- Detects your OS and architecture
+- Downloads the appropriate binary
+- Installs to `/usr/local/bin`
+- Verifies the installation
 
-If you have Go installed:
+### Package Managers
+
+**Homebrew (macOS/Linux):**
+```bash
+# Add the tap
+brew tap 01dnot/unraidcli
+
+# Install
+brew install unraidcli
+
+# Update
+brew upgrade unraidcli
+```
+
+**Go Install:**
 ```bash
 go install github.com/01dnot/unraidcli@latest
 ```
 
-### Option 3: Build from Source
+### Manual Installation
 
+**Download Pre-built Binary:**
+
+Download from the [Releases page](https://github.com/01dnot/unraidcli/releases) or use curl:
+
+```bash
+# Linux AMD64
+curl -L https://github.com/01dnot/unraidcli/releases/latest/download/unraidcli-linux-amd64 -o unraidcli
+
+# Linux ARM64
+curl -L https://github.com/01dnot/unraidcli/releases/latest/download/unraidcli-linux-arm64 -o unraidcli
+
+# macOS Intel
+curl -L https://github.com/01dnot/unraidcli/releases/latest/download/unraidcli-darwin-amd64 -o unraidcli
+
+# macOS Apple Silicon
+curl -L https://github.com/01dnot/unraidcli/releases/latest/download/unraidcli-darwin-arm64 -o unraidcli
+
+# Make executable and install
+chmod +x unraidcli
+sudo mv unraidcli /usr/local/bin/
+```
+
+**Build from Source:**
 ```bash
 git clone https://github.com/01dnot/unraidcli.git
 cd unraidcli

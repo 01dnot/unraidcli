@@ -1,4 +1,5 @@
 # unraidcli
+![ChatGPT Image Jan 21, 2026, 10_01_15 PM](https://github.com/user-attachments/assets/7b78d56f-8afb-4116-ad4f-b1492bb18dd7)
 
 > A powerful command-line interface for managing Unraid servers from your terminal
 

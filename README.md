@@ -56,18 +56,9 @@ This script automatically:
 - Installs to `/usr/local/bin`
 - Verifies the installation
 
-### Package Managers
+### Alternative Methods
 
-**Homebrew (macOS/Linux):**
-```bash
-# Install (single command)
-brew install 01dnot/unraidcli/unraidcli
-
-# Update
-brew upgrade 01dnot/unraidcli/unraidcli
-```
-
-**Go Install:**
+**Using Go:**
 ```bash
 go install github.com/01dnot/unraidcli@latest
 ```

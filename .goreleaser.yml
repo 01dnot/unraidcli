@@ -24,20 +24,6 @@ archives:
   - format: binary
     name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
 
-brews:
-  - name: unraidcli
-    repository:
-      owner: 01dnot
-      name: homebrew-unraidcli
-    folder: Formula
-    homepage: https://github.com/01dnot/unraidcli
-    description: Command-line interface for managing Unraid servers
-    license: MIT
-    install: |
-      bin.install "unraidcli"
-    test: |
-      system "#{bin}/unraidcli", "--version"
-
 checksum:
   name_template: 'checksums.txt'
 
